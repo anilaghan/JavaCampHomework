@@ -1,15 +1,18 @@
 package classesWithAttributes;
 
 public class Product {
-	private int id;
-	private String name;
-	private String description;
-	private double price;
-	private int stockAmount;
-	private String renk;
-	private String kod;
+	private int _id;
+	private String _name;
+	private String _description;
+	private double _price;
+	private int _stockAmount;
+	private String __kod;
 	
 	public int getId() {
-		return id;
+		return _id;
+	}
+	
+	public void setId(int id) {
+		this._id=id;
 	}
 }
