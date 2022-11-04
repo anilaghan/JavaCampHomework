@@ -1,12 +1,28 @@
 package classesWithAttributes;
 
 public class Product {
+	public Product(int id, String name, String description, double price, int stockAmount, String renk) {
+		this.id = id;
+		this.renk = renk;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.stockAmount = stockAmount;
+		
+		System.out.println("Yapıcı Blok Çalıştı");
+	}
+
+	public Product() {
+	
+	}
+
 	private int id;
 	private String name;
 	private String description;
 	private double price;
 	private int stockAmount;
 	private String kod;
+	private String renk;
 
 	public int getId() {
 		return id;
@@ -49,7 +65,15 @@ public class Product {
 	}
 
 	public String getKod() {
-		return this.name.substring(0,1)+id;
+		return this.name.substring(0, 1) + id;
+	}
+
+	public String getRenk() {
+		return renk;
+	}
+
+	public void setRenk(String renk) {
+		this.renk = renk;
 	}
 
 }
