@@ -8,4 +8,8 @@ public class Product {
 	private int stockAmount;
 	private String renk;
 	private String kod;
+	
+	public int getId() {
+		return id;
+	}
 }
