@@ -32,7 +32,7 @@ public class LanguageManager implements LanguageService {
 		}
 		for (ProgramingLanguage language1 : getAll()) {
 			if (language1.getName() == language.getName()) {
-				throw new Exception("Aynı İsimde Programlama Dili Mevcut.");
+				throw new Exception("Aynı İsimd Programlama Dili Mevcut.");
 			}
 
 		}

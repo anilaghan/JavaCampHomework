@@ -48,6 +48,6 @@ public class ProgramingLanguagesController {
 
 	@DeleteMapping("/{id}")
 	public void delete(int id) throws Exception {
-		languageService.delete(cid);
+		languageService.delete(id);
 	}
 }
