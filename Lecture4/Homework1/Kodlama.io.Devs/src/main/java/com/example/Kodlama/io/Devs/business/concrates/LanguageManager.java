@@ -45,7 +45,7 @@ public class LanguageManager implements LanguageService {
 			if (language2.getId() == id || name.isEmpty()) {
 				throw new Exception("Hatalı Giriş Yaptınız, Bilgilerinizi Kontrol Ediniz.");
 			}
-			languageRepository.updaate(language, id, name);
+			languageRepository.update(language, id, name);
 		}
 	}
 
