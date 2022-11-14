@@ -1,6 +1,10 @@
 package com.example.Kodlama.io.Devs.dataAccess.abstracts;
 
-import com.example.Kodlama.io.Devs.entities.concrates.ProgramingLanguage;
+import java.util.List;
 
-public interface LanguageRepository extends  JpaRepository<ProgramingLanguage,Integer> {
+import com.example.Kodlama.io.Devs.entities.concrates.ProgramingLanguage;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LanguageRepository extends JpaRepository<ProgramingLanguage,Integer> {
+
 }
