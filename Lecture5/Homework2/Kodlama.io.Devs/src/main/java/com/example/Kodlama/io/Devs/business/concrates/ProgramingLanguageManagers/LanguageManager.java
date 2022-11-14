@@ -50,7 +50,7 @@ public class LanguageManager implements LanguageService {
         ProgramingLanguage programingLanguage = new ProgramingLanguage();
         programingLanguage.setName(createLanguageRequest.getName());
         if (programingLanguage.getName().isEmpty()) {
-            throw new Exception("Programlama Dili Boş Bırakılamaz");
+            throw new Exception("Programlama Dili Boş Brakılamaz");
         }
         for (GetAllLanguagesResponse languageResponse : getAll()) {
             if (languageResponse.getName().equals(programingLanguage.getName())) {
