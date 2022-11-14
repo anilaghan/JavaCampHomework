@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Kodlama.io.Devs.business.abstracts.LanguageService;
-import com.example.Kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import com.example.Kodlama.io.Devs.entities.concrates.ProgramingLanguage;
 
 @Service
@@ -32,7 +31,7 @@ public class LanguageManager implements LanguageService {
 		}
 		for (ProgramingLanguage language1 : getAll()) {
 			if (language1.getName() == language.getName()) {
-				throw new Exception("Aynı İsimd Programlama Dili Mevcut.");
+				throw new Exception("Aynı İsimde Programlama Dili Mevcut.");
 			}
 
 		}
