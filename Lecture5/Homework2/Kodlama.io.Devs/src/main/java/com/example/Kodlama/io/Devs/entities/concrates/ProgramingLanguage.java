@@ -3,16 +3,12 @@ package com.example.Kodlama.io.Devs.entities.concrates;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name="programingLanguage")
 public class ProgramingLanguage {

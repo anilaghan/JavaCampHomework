@@ -2,21 +2,18 @@ package com.example.Kodlama.io.Devs.business.concrates.ProgramingLanguageManager
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import com.example.Kodlama.io.Devs.business.requests.ProgramingLanguageRequest.CreateLanguageRequest;
-import com.example.Kodlama.io.Devs.business.requests.ProgramingLanguageRequest.DeleteLanguageRequest;
 import com.example.Kodlama.io.Devs.business.requests.ProgramingLanguageRequest.UpdateLanguageRequest;
 import com.example.Kodlama.io.Devs.business.responses.ProgramingLanguageResponse.GetAllLanguagesResponse;
+import com.example.Kodlama.io.Devs.business.responses.ProgramingLanguageResponse.LanguageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Kodlama.io.Devs.business.abstracts.ProgramingLanguageServices.LanguageService;
 import com.example.Kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import com.example.Kodlama.io.Devs.entities.concrates.ProgramingLanguage;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityNotFoundException;
 
 @Service
 public class LanguageManager implements LanguageService {
@@ -46,7 +43,18 @@ public class LanguageManager implements LanguageService {
     }
 
     @Override
-    public void add(CreateLanguageRequest createLanguageRequest) throws Exception {
+    public LanguageResponse getLanguageResponseById(int id){
+        Optional<ProgramingLanguage> programingLanguage = languageRepository.findById(id);
+        return programingLanguage.map(this::toLanguageResponse).orElse(null);
+    }
+
+    @Override
+    public ProgramingLanguage getLanguageById(int id) {
+        return languageRepository.getReferenceById(id);
+    }
+
+    @Override
+    public LanguageResponse add(CreateLanguageRequest createLanguageRequest) throws Exception {
         ProgramingLanguage programingLanguage = new ProgramingLanguage();
         programingLanguage.setName(createLanguageRequest.getName());
         if (programingLanguage.getName().isEmpty()) {
@@ -58,27 +66,28 @@ public class LanguageManager implements LanguageService {
             }
         }
         languageRepository.save(programingLanguage);
+        return null;
+    }
+
+    public LanguageResponse toLanguageResponse(ProgramingLanguage programingLanguage){
+        LanguageResponse languageResponse = new LanguageResponse();
+        languageResponse.setId(programingLanguage.getId());
+        languageResponse.setName(programingLanguage.getName());
+        return  languageResponse;
+    }
+    @Override
+    public LanguageResponse update(int id,UpdateLanguageRequest updateLanguageRequest) {
+        Optional <ProgramingLanguage> programinLanguage = languageRepository.findById(id);
+        if(programinLanguage.isPresent()){
+            ProgramingLanguage programingLanguage1= programinLanguage.get();
+            programingLanguage1.setName(updateLanguageRequest.getName());
+            return toLanguageResponse(languageRepository.save(programingLanguage1));
+        }
+        return null;
     }
 
     @Override
-    @Transactional
-    public void update(UpdateLanguageRequest updateLanguageRequest)  throws Exception {
-        if(updateLanguageRequest.getName().isBlank()){
-            throw new Exception("Dil ismi boş bırakılamaz.");
-        }
-        ProgramingLanguage programingLanguage = languageRepository.findById(updateLanguageRequest.getId())
-                .orElseThrow(()->new EntityNotFoundException("Güncellenecek Dil Bulunamadı"));
-        programingLanguage.setName(updateLanguageRequest.getName());
-    }
-
-    @Override
-    public void delete(DeleteLanguageRequest deleteLanguageRequest) {
-        ProgramingLanguage programingLanguage = new ProgramingLanguage();
-        programingLanguage.setId(deleteLanguageRequest.getId());
-        for(GetAllLanguagesResponse languagesResponse : getAll()){
-            if(languagesResponse.getId()==programingLanguage.getId()){
-                languageRepository.delete(programingLanguage);
-            }
-        }
+    public void delete(int id) {
+        languageRepository.deleteById(id);
     }
 }

@@ -1,32 +1,31 @@
 package com.example.Kodlama.io.Devs.business.concrates.ProgramingTechnologyManagers;
 
+import com.example.Kodlama.io.Devs.business.abstracts.ProgramingLanguageServices.LanguageService;
 import com.example.Kodlama.io.Devs.business.abstracts.ProgramingTechnologyServices.TechnologyService;
 import com.example.Kodlama.io.Devs.business.requests.ProgramingTechnologyRequest.CreateTechnologyRequest;
-import com.example.Kodlama.io.Devs.business.requests.ProgramingTechnologyRequest.DeleteTechnologyRequest;
 import com.example.Kodlama.io.Devs.business.requests.ProgramingTechnologyRequest.UpdateTechnologyRequest;
 import com.example.Kodlama.io.Devs.business.responses.ProgramingTechnologyResponse.GetAllTechnologyResponse;
+import com.example.Kodlama.io.Devs.business.responses.ProgramingTechnologyResponse.TechnologyResponse;
 import com.example.Kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import com.example.Kodlama.io.Devs.dataAccess.abstracts.TechnologyRepository;
 import com.example.Kodlama.io.Devs.entities.concrates.ProgramingLanguage;
 import com.example.Kodlama.io.Devs.entities.concrates.ProgramingTechnology;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
+
 
 @Service
 public class TechnologyManager implements TechnologyService {
-
-    private LanguageRepository languageRepository;
+    private LanguageService languageService;
     private TechnologyRepository technologyRepository;
 
     @Autowired
-    public TechnologyManager(LanguageRepository languageRepository, TechnologyRepository technologyRepository){
-        this.languageRepository=languageRepository;
+    public TechnologyManager(TechnologyRepository technologyRepository, LanguageService languageService){
+        this.languageService=languageService;
         this.technologyRepository=technologyRepository;
     }
 
@@ -44,10 +43,15 @@ public class TechnologyManager implements TechnologyService {
         }
         return technologyResponses;
     }
+    @Override
+    public TechnologyResponse getById(int id){
+        Optional<ProgramingTechnology> programingTechnology= technologyRepository.findById(id);
+        return programingTechnology.map((this::toTechnologyResponse)).orElse(null);
+    }
 
     @Override
-    public void add(CreateTechnologyRequest createTechnologyRequest) throws Exception{
-        ProgramingLanguage programingLanguage = languageRepository.findById(createTechnologyRequest.getProgramingLanguageId()).get();
+    public TechnologyResponse add(CreateTechnologyRequest createTechnologyRequest) throws Exception{
+        ProgramingLanguage programingLanguage = languageService.getLanguageById(createTechnologyRequest.getProgramingLanguageId());
         ProgramingTechnology programingTechnology=new ProgramingTechnology();
         programingTechnology.setName(createTechnologyRequest.getName());
         programingTechnology.setProgramingLanguage(programingLanguage);
@@ -60,27 +64,29 @@ public class TechnologyManager implements TechnologyService {
             }
         }
         technologyRepository.save(programingTechnology);
+        return null;
     }
 
     @Override
-    @Transactional
-    public void update(UpdateTechnologyRequest updateTechnologyRequest) throws Exception {
-        if(updateTechnologyRequest.getName().isBlank()){
-            throw new Exception("Teknoloji ismi boş bırakılamaz.");
+    public TechnologyResponse update(int id,UpdateTechnologyRequest updateTechnologyRequest) throws Exception {
+        Optional<ProgramingTechnology>programingTechnology=technologyRepository.findById(id);
+        if(programingTechnology.isPresent()){
+            ProgramingTechnology programingTechnology1 = programingTechnology.get();
+            programingTechnology1.setName(updateTechnologyRequest.getName());
+            return toTechnologyResponse(technologyRepository.save(programingTechnology1));
         }
-        ProgramingTechnology programingTechnology = technologyRepository.findById(updateTechnologyRequest.getId())
-                .orElseThrow(()->new EntityNotFoundException("Güncellenecek Programlama Teknolojisi Bulunamadı"));
-        programingTechnology.setName(updateTechnologyRequest.getName());
+        return null;
     }
 
+    public TechnologyResponse toTechnologyResponse (ProgramingTechnology programingTechnology){
+        TechnologyResponse technologyResponse = new TechnologyResponse();
+        technologyResponse.setId(programingTechnology.getId());
+        technologyResponse.setName(programingTechnology.getName());
+        technologyResponse.setLanguageName(programingTechnology.getProgramingLanguage().getName());
+        return technologyResponse;
+    }
     @Override
-    public void delete(DeleteTechnologyRequest deleteLanguageRequest) {
-        ProgramingTechnology programingTechnology = new ProgramingTechnology();
-        programingTechnology.setId(deleteLanguageRequest.getId());
-        for(GetAllTechnologyResponse technologyResponse:getAll()){
-            if(technologyResponse.getId()==programingTechnology.getId()){
-                technologyRepository.delete(programingTechnology);
-            }
-        }
+    public void delete(int id) {
+        technologyRepository.deleteById(id);
     }
 }

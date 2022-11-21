@@ -3,17 +3,23 @@ package com.example.Kodlama.io.Devs.business.abstracts.ProgramingLanguageService
 import java.util.List;
 
 import com.example.Kodlama.io.Devs.business.requests.ProgramingLanguageRequest.CreateLanguageRequest;
-import com.example.Kodlama.io.Devs.business.requests.ProgramingLanguageRequest.DeleteLanguageRequest;
 import com.example.Kodlama.io.Devs.business.requests.ProgramingLanguageRequest.UpdateLanguageRequest;
 import com.example.Kodlama.io.Devs.business.responses.ProgramingLanguageResponse.GetAllLanguagesResponse;
+import com.example.Kodlama.io.Devs.business.responses.ProgramingLanguageResponse.LanguageResponse;
+import com.example.Kodlama.io.Devs.entities.concrates.ProgramingLanguage;
 
 public interface LanguageService {
 
 	List<GetAllLanguagesResponse> getAll();
-	void add(CreateLanguageRequest createLanguageRequest) throws Exception;
+	LanguageResponse getLanguageResponseById(int id);
 
-	void update(UpdateLanguageRequest updateLanguageRequest) throws Exception;
+	ProgramingLanguage getLanguageById(int id);
 
-	void delete(DeleteLanguageRequest deleteLanguageRequest);
+	LanguageResponse add(CreateLanguageRequest createLanguageRequest) throws Exception;
+
+	LanguageResponse toLanguageResponse(ProgramingLanguage programingLanguage);
+	LanguageResponse update(int id ,UpdateLanguageRequest updateLanguageRequest) ;
+
+	void delete(int id);
 
 }
