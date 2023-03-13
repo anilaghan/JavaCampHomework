@@ -6,7 +6,6 @@ import com.example.Kodlama.io.Devs.business.requests.ProgramingTechnologyRequest
 import com.example.Kodlama.io.Devs.business.requests.ProgramingTechnologyRequest.UpdateTechnologyRequest;
 import com.example.Kodlama.io.Devs.business.responses.ProgramingTechnologyResponse.GetAllTechnologyResponse;
 import com.example.Kodlama.io.Devs.business.responses.ProgramingTechnologyResponse.TechnologyResponse;
-import com.example.Kodlama.io.Devs.dataAccess.abstracts.LanguageRepository;
 import com.example.Kodlama.io.Devs.dataAccess.abstracts.TechnologyRepository;
 import com.example.Kodlama.io.Devs.entities.concrates.ProgramingLanguage;
 import com.example.Kodlama.io.Devs.entities.concrates.ProgramingTechnology;

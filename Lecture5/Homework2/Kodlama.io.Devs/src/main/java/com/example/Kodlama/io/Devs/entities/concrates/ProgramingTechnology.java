@@ -24,5 +24,4 @@ public class ProgramingTechnology {
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "programing_language_id" , nullable = false)
     private ProgramingLanguage programingLanguage;
-
 }

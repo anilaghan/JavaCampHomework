@@ -2,9 +2,7 @@ package com.example.Kodlama.io.Devs.webApi.controllers;
 
 import com.example.Kodlama.io.Devs.business.abstracts.ProgramingTechnologyServices.TechnologyService;
 import com.example.Kodlama.io.Devs.business.requests.ProgramingTechnologyRequest.CreateTechnologyRequest;
-import com.example.Kodlama.io.Devs.business.requests.ProgramingTechnologyRequest.DeleteTechnologyRequest;
 import com.example.Kodlama.io.Devs.business.requests.ProgramingTechnologyRequest.UpdateTechnologyRequest;
-import com.example.Kodlama.io.Devs.business.responses.ProgramingLanguageResponse.LanguageResponse;
 import com.example.Kodlama.io.Devs.business.responses.ProgramingTechnologyResponse.GetAllTechnologyResponse;
 import com.example.Kodlama.io.Devs.business.responses.ProgramingTechnologyResponse.TechnologyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
